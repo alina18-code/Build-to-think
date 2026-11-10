@@ -21,10 +21,13 @@ def database_url ():
 
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY")
+    if not SECRET_KEY:
+        raise RuntimeError("SECRET_KEY is not set. Add it to your .env file.")
+    
+    SECRET_KEY = os.environ.get("SECRET_KEY")
     SQLALCHEMY_DATABASE_URL = database_url()
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"
     SESSION_COOKIE_SECURE = os.environ.get("FLASK_DEBUG") != "1"
 
-    if not SECRET_KEY:
-            raise RuntimeError("SECRET_KEY is not set. Add it to your .env file.")
+    
